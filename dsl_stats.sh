@@ -2,7 +2,7 @@
 ##
 ##  Copyright Lutz Hillebrand
 ##  feel free to use for personal use
-## 
+##
 # source jshn shell library
 . /usr/share/libubox/jshn.sh
 
@@ -16,13 +16,11 @@ INTERVAL=$COLLECTD_INTERVAL
 INTERVAL=$(awk -v i=$INTERVAL 'BEGIN{print int(i)}')
 
 while sleep $INTERVAL; do
-  ## Status aus Datei laden, direkte Befehlsausfuehrung wg. erforderlichem root nicht moeglich
-  #json_load "$(/etc/init.d/dsl_control dslstat)"
-  json_load_file /tmp/dslstat.txt
-  
+  json_load "$(ubus call dsl metrics)"
+
   ## Uptime
   json_get_var upt uptime
-  
+
   ## upstream
   json_select upstream
   json_get_var up_adr attndr
@@ -35,7 +33,7 @@ while sleep $INTERVAL; do
   json_get_var dn_adr attndr
   json_get_var dn_dr  data_rate
   json_get_var dn_snr snr
-  
+
   ## errors
   json_select
   json_select errors
