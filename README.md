@@ -18,7 +18,7 @@ does not exist anymore.
 Furthermore the statistics output of 
 `dsl_control dslstat` has an json output different to the outputs before.   
 
-Additionally the `collect-mod-exec` module, which allows to call user defined scripts, does not allow root access, which is neccessary to call `dsl_control dslstat` or `ubus call dsl metrics`.
+Additionally the `collectd-mod-exec` module, which allows to call user defined scripts, does not allow root access, which is neccessary to call `dsl_control dslstat` or `ubus call dsl metrics`.
 
 ## The solution ##
 ### Whitelisting the ubus call ###
@@ -27,7 +27,7 @@ This allows the `dsl_stats.sh` script to read the dsl metrics as user nobody.
 I don't know how to apply this change without rebooting, so just do that.
    
 ### Filling the rrd database ### 
-The script `dsl_stats.sh`, which is called by the module `collect-mod-exec`, decodes the json format of the data using the library `/usr/share/libubox/jshn.sh`.
+The script `dsl_stats.sh`, which is called by the module `collectd-mod-exec`, decodes the json format of the data using the library `/usr/share/libubox/jshn.sh`.
    
 You can save the script wherever you want, but better not in folders that do not survive a reboot.
 I mounted a usb-stick to also keep my statistics data there. That is also my place for the script. 
